@@ -1,0 +1,11 @@
+.admin-dashboard {
+    display: flex;
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.dashboard-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f9f9f9;
+}

@@ -1,0 +1,117 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 40px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo */
+.logo .brand-name {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1a1a1a;
+  cursor: pointer;
+}
+
+.logo .highlight {
+  color: #FF5F6D;
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-weight: 500;
+  color: #333;
+  padding: 6px 12px;
+  transition: 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a:focus {
+  border: 1px solid #333;
+  border-radius: 6px;
+}
+
+/* Search Bar */
+.nav-search input {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 180px;
+}
+
+/* Actions (Cart + User/Register) */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cart-icon,
+.user-icon {
+  cursor: pointer;
+  color: #333;
+  transition: transform 0.2s;
+}
+
+.cart-icon:hover,
+.user-icon:hover {
+  transform: scale(1.1);
+}
+
+.register-btn {
+  padding: 6px 12px;
+  background-color: #FF5F6D;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.register-btn:hover {
+  background-color: #e24e5c;
+}
+
+/* Hamburger (Mobile) */
+.hamburger {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-links,
+  .nav-search {
+    display: none;
+  }
+
+  .nav-links.active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    background: white;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    z-index: 999;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}

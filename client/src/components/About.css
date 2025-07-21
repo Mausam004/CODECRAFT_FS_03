@@ -1,0 +1,117 @@
+.about-page {
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
+
+.about-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff0f0;
+  padding: 60px 10%;
+  flex-wrap: wrap;
+}
+
+.about-hero-text h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+.highlight {
+  color: #ff4d6d;
+}
+.about-hero-text p {
+  font-size: 1.2rem;
+  color: #666;
+}
+.about-hero-image img {
+  max-width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.about-section {
+  padding: 60px 10%;
+}
+
+.about-section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+}
+
+.about-story {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.about-story img {
+  width: 300px;
+  border-radius: 10px;
+}
+.about-story p {
+  flex: 1;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+.offer-section {
+  padding: 60px 20px;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.section-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.offer-grid {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.offer-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  width: 200px;
+  transition: transform 0.3s ease;
+}
+
+.offer-card:hover {
+  transform: translateY(-5px);
+}
+
+.offer-card img {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 15px;
+}
+
+.offer-card p {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+
+.mission {
+  text-align: center;
+}
+.mission img {
+  width: 70%;
+  max-height: 250px;
+  margin-top: 20px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.about-footer {
+  text-align: center;
+  padding: 30px 0;
+  background: #f9f9f9;
+  color: #666;
+}

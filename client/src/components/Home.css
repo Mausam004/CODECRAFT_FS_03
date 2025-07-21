@@ -1,4 +1,4 @@
-
+/* 
 body, html {
   margin: 0;
   padding: 0;
@@ -10,6 +10,228 @@ body, html {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+} */
+/* General Reset */
+body, h1, h2, h3, p, button {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.home-page {
+  background-color: #fff;
+  color: #1a1a1a;
+}
+
+/* HERO SECTION */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4rem 8%;
+  background-color: #fdf8f7;
+  flex-wrap: wrap;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.shop-now-btn {
+  padding: 0.8rem 2rem;
+  background-color: #ef476f;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.shop-now-btn:hover {
+  background-color: #d93f63;
+}
+
+.hero-image img {
+  width: 320px;
+  max-width: 100%;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* CATEGORIES */
+.categories {
+  display: flex;
+  justify-content: space-around;
+  padding: 2rem 8%;
+  background-color: #fff;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.category-card {
+  background-color: #f7f7f7;
+  padding: 1.2rem 2rem;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.category-card:hover {
+  background-color: #f1ecec;
+}
+
+/* FEATURED PRODUCTS */
+.featured {
+  padding: 3rem 8%;
+  background-color: #fff;
+}
+
+.featured h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: start;
+}
+
+.product-card {
+  flex: 1 1 220px;
+  max-width: 240px;
+  background-color: #fafafa;
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  text-align: center;
+}
+
+.product-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.product-card .name {
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.product-card .price {
+  color: #ef476f;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* NEWSLETTER */
+.newsletter {
+  background-color: #fff2f3;
+  padding: 2.5rem 8%;
+  text-align: center;
+  border-radius: 20px;
+  margin: 3rem 8%;
+}
+
+.newsletter h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.subscribe-box {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.subscribe-box input {
+  padding: 0.8rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  min-width: 250px;
+}
+
+.subscribe-box button {
+  background-color: #ef476f;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.subscribe-box button:hover {
+  background-color: #d93f63;
+}
+
+/* FOOTER */
+.footer {
+  margin-top: 4rem;
+  padding: 2rem 8%;
+  background-color: #fafafa;
+  text-align: center;
+  border-top: 1px solid #eee;
+}
+
+.footer-links {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: #333; /* Or whatever color suits your theme */
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #ff5f6d; /* On hover */
+}
+
+
+
+.footer-links span {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.footer-links span:hover {
+  color: #ef476f;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero-content h1 {
+    font-size: 2.2rem;
+  }
+
+  .product-grid {
+    justify-content: center;
+  }
 }
 
 h1 {

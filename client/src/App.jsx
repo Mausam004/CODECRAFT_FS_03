@@ -9,6 +9,15 @@ import Login from './components/Login';
 import ResetPassword from './components/ResetPassword';
 import OtpForm from './components/OtpForm';
 import Profile from './components/Profile';
+import NavBar from './components/Navbar';
+import AddProduct from './admin/AddProduct';
+import ProductList from './components/ProductList';
+import About from './components/About';
+import Contact from './components/Contact';
+import Admin from './admin/Admin';
+import ProductDetails from './components/ProductDetails';
+import CartPage from './components/CartPage';
+import SearchBar from './components/SearchBar';
 
 
 function App() {
@@ -22,6 +31,15 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword/>}/>
         <Route path="/otp-form/:email" element={<OtpForm/>}/>
         <Route path="/profile" element={<Profile />} />
+        <Route path="/navbar" element={<NavBar />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/add-product" element={<AddProduct />} />
+        <Route path="/product-list" element={<ProductList/>} />
+        <Route path="/admin/*" element={<Admin/>} />
+        <Route path="/product/:id" element={<ProductDetails/>} />
+        <Route path="/cart/:id" element={<CartPage/>} />
+        <Route path="/search" element={<SearchBar/>} />
       </Routes>
       <ToastContainer />
     </BrowserRouter>

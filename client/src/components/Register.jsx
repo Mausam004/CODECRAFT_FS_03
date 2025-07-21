@@ -46,8 +46,9 @@ export default function Register() {
                 // Save user data to localStorage
                 localStorage.setItem("user", JSON.stringify(data.user));
 
+                // 3. Navigate directly to profile
                 toast.success("Registered successfully!");
-                setTimeout(() => navigate("/login"), 1000);
+                navigate("/");
             }
         } catch (err) {
             console.error("Error during registration:", err);
