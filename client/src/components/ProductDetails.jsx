@@ -25,10 +25,22 @@ export default function ProductDetails() {
 
     const images = JSON.parse(product.image);
 
-   const handleBuyNow = () => {
-    navigate(`/buynow/${id}`);
-};
 
+const checkAuth = () => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) {
+            navigate('/register');
+            return false;
+        }
+        return true;
+    };
+
+
+
+    const handleBuyNow = () => {
+        if (!checkAuth()) return;
+        navigate(`/buynow/${id}`);
+    };
 
     const handleAddToCart = () => {
         const existingCart = JSON.parse(localStorage.getItem('cart')) || [];

@@ -15,6 +15,13 @@ export default function CartPage() {
         navigate(`/product/${id}`);
     };
 
+    const handleRemove = (e, indexToRemove) => {
+        e.stopPropagation(); // Prevent card click
+        const updatedCart = cartItems.filter((_, index) => index !== indexToRemove);
+        setCartItems(updatedCart);
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
+    };
+
     return (
         <div className="cart-container">
             <h2 className="cart-heading">Your Cart</h2>
@@ -48,6 +55,12 @@ export default function CartPage() {
                                 <div className="cart-card-details">
                                     <h3>{item.name}</h3>
                                     <p>Price: ₹{item.price}</p>
+                                    <button
+                                        className="remove-btn"
+                                        onClick={(e) => handleRemove(e, index)}
+                                    >
+                                        Remove
+                                    </button>
                                 </div>
                             </div>
                         );

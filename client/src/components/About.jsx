@@ -14,7 +14,7 @@ export default function About() {
           <p>Your one-stop destination for style and essentials.</p>
         </div>
         <div className="about-hero-image">
-          <img src="https://images.unsplash.com/photo-1561807761-102a72a2c681" alt="Shopping" />
+          <img src="/public/shopping.png"  alt="Shopping" />
         </div>
       </section>
 
@@ -22,7 +22,7 @@ export default function About() {
       <section className="about-section">
         <h2>Our Story</h2>
         <div className="about-story">
-          <img src="https://images.unsplash.com/photo-1598515213598-6d3c9133b3ee" alt="Our Story" />
+          <img src="/public/our story.png" alt="Our Story" />
           <p>
             At ShopNow, we specialize in the latest fashion trends, offering a wide
             range of clothing and accessories for all styles and occasions.

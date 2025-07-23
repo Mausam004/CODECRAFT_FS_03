@@ -18,6 +18,8 @@ import Admin from './admin/Admin';
 import ProductDetails from './components/ProductDetails';
 import CartPage from './components/CartPage';
 import SearchBar from './components/SearchBar';
+import BuyNowPage from './components/BuyNow';
+import Shop from './components/Shop';
 
 
 function App() {
@@ -40,6 +42,8 @@ function App() {
         <Route path="/product/:id" element={<ProductDetails/>} />
         <Route path="/cart/:id" element={<CartPage/>} />
         <Route path="/search" element={<SearchBar/>} />
+        <Route path="/buynow/:id" element={<BuyNowPage/>} />
+        <Route path="/shop" element={<Shop />} />
       </Routes>
       <ToastContainer />
     </BrowserRouter>

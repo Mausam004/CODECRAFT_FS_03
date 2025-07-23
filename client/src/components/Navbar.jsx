@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { FaUserCircle, FaShoppingCart, FaBars } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
-import SearchBar from "./SearchBar";
+
 
 export default function Navbar() {
   const [user, setUser] = useState(null);
@@ -45,18 +45,14 @@ export default function Navbar() {
         <Link to="/contact">Contact</Link>
       </div>
 
-      {/* Search Bar */}
-     <div className="nav-search">
-      <SearchBar />
-      </div>
-
+   
       {/* Right Actions */}
       <div className="nav-actions">
         <FaShoppingCart
           className="cart-icon"
           size={24}
           title="Cart"
-          onClick={() => navigate("/cart")}
+          onClick={() => navigate("/cart/${cart.id}")}
         />
 
         {user ? (

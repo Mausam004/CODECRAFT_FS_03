@@ -1,80 +1,49 @@
-import React from "react";
+import React,{useEffect,useState}from "react";
 import Navbar from "../components/Navbar"; // Adjust the path based on your folder structure
 import "./Home.css"; // Create and style this CSS file
 import { Link } from "react-router-dom";
 import ProductList from "./ProductList";
+import SearchBar from "./SearchBar";
+import axios from "axios";
+import NewArrivals from "./NewArrivals";
 
 export default function Home() {
+
+  const [homeProducts, setHomeProducts] = useState([]);
+
+  const fetchLimitedProducts = async () => {
+    try {
+      const res = await axios.get("http://localhost:8000/api/products/get");
+      setHomeProducts(res.data.slice(0, 10)); // only show 10 products
+    } catch (err) {
+      console.error("Error fetching homepage products:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchLimitedProducts();
+  }, []); 
+
 
   return (
     <div className="home-page">
       <Navbar />
-      
-      {/* Hero Section */}
-      <section className="hero">
-        <div className="hero-content">
-          <h1>Latest arrivals</h1>
-          <button className="shop-now-btn">Shop now</button>
-        </div>
-        <div className="hero-image">
-          <img
-            src="https://images.unsplash.com/photo-1542060748-10c28b62716e"
-            alt="Fashion Model"
-          />
-        </div>
-      </section>
+         {/* Search Bar */}
+           <div className="nav-search">
+            <SearchBar />
+            </div>
 
-      {/* Categories Section */}
-      <section className="categories">
-        <div className="category-card">Women's clothing</div>
-        <div className="category-card">Men's clothing</div>
-        <div className="category-card">Accessories</div>
-      </section>
+        <ProductList limit={10} />
+        <NewArrivals/>
+ 
+     <section className="promo-banner">
+  <h3>🎉 Limited Time Offer!</h3>
+  <p>Flat 20% off on all Accessories. Hurry, ends soon!</p>
+  <Link to="/shop">
+    <button className="shop-now-btn">Shop Now</button>
+  </Link>
+</section>
 
-      <ProductList/>
-
-      {/* Featured Products */}
-      <section className="featured">
-        <h2>Featured Products</h2>
-        <div className="product-grid">
-          <div className="product-card">
-            <img
-              src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab"
-              alt="Basic Tee"
-            />
-            <p className="name">Basic Tee</p>
-            <p className="price">$35.00</p>
-          </div>
-
-          <div className="product-card">
-            <img src="https://images.unsplash.com/photo-1600180758890-94a45c0c4b2c?auto=format&fit=crop&w=600&q=80" 
-                 alt="Bag" 
-                 />
-
-            <p className="name">Leather Bag</p>
-            <p className="price">$40.00</p>
-          </div>
-
-          <div className="product-card">
-            <img
-              src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246"
-              alt="Casual Shirt"
-            />
-            <p className="name">Casual Shirt</p>
-            <p className="price">$70.00</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Newsletter Section */}
-      <section className="newsletter">
-        <h3>Subscribe to our newsletter</h3>
-        <p>And get 10% off your first order</p>
-        <div className="subscribe-box">
-          <input type="email" placeholder="Enter your email" />
-          <button>Subscribe</button>
-        </div>
-      </section>
       <footer className="footer">
         <p>© 2025 ShopNow. All rights reserved.</p>
         <div className="footer-links">

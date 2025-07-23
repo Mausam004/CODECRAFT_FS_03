@@ -101,7 +101,7 @@ export default function Register() {
     return error;
 }
     return (
-        <div className="register-page">
+        <div className="register-page-container">
             <div className="register-box">
                 <h2 className="register-title">Register</h2>
                 <form onSubmit={handleSubmit}>

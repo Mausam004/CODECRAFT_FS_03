@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import './ProductList.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./Shop.css";
+import Navbar from "../components/Navbar";
 
-export default function ProductList({ limit = null }) {
-    const [products, setProducts] = useState([]);
+export default function Shop() {
+  const [products, setProducts] = useState([]);
     const [filters, setFilters] = useState({
         category: '',
         size: '',
@@ -12,30 +12,21 @@ export default function ProductList({ limit = null }) {
         minPrice: '',
         maxPrice: ''
     });
-    const navigate = useNavigate();
 
-   const fetchProducts = async (filterParams = {}) => {
-    const params = new URLSearchParams(filterParams).toString();
-    const url = params
-        ? `http://localhost:8000/api/products/get?${params}`
-        : `http://localhost:8000/api/products/get`;
+  const fetchProducts = async () => {
     try {
-        const res = await axios.get(url);
-        let data = res.data;
-        if (limit) {
-            data = data.slice(0, limit);
-        }
-        setProducts(data);
+      const res = await axios.get("http://localhost:8000/api/products/get");
+      setProducts(res.data);
     } catch (err) {
-        console.error(err);
+      console.error("Error fetching products:", err);
     }
-};
+  };
 
-    useEffect(() => {
-        fetchProducts();
-    }, []);
+  useEffect(() => {
+    fetchProducts();
+  }, []); 
 
-    const handleFilterChange = (e) => {
+   const handleFilterChange = (e) => {
         setFilters({
             ...filters,
             [e.target.name]: e.target.value
@@ -66,15 +57,15 @@ export default function ProductList({ limit = null }) {
         navigate(`/product/${product.id}`);
     };
 
-    return (
-        <>
-            <form className="filter-form" onSubmit={handleFilterSubmit}>
+  return (
+    <>
+      <Navbar />
+       <form className="filter-form" onSubmit={handleFilterSubmit}>
                 <select name="category" value={filters.category} onChange={handleFilterChange}>
                     <option value="">All Categories</option>
                     <option value="Tshirt">T-shirt</option>
                     <option value="Dresses">Dress</option>
-                    <option value="Jeans">Jeans</option>
-                    <option value="Shirt">Shirts</option>
+                    <option value="Accessories">Accessories</option>
                 </select>
 
 
@@ -112,29 +103,27 @@ export default function ProductList({ limit = null }) {
                 <button type="submit">Apply</button>
                 <button type="button" onClick={handleReset}>Reset</button>
             </form>
+      <div className="shop-hero">
+        <h1 className="shop-heading">Discover Your Style ✨</h1>
+        <p className="shop-subheading">Explore our handpicked latest arrivals just for you.</p>
+      </div>
 
-          <div className="product-list">
-                {products.length === 0 ? (
-                    <p style={{ textAlign: 'center', fontSize: '18px', marginTop: '20px' }}>
-                        No products found matching the selected filters.
-                    </p>
-                ) : (
-                    products.map(product => {
-                        const images = JSON.parse(product.image);
-                        return (
-                            <div
-                                key={product.id}
-                                className="product-card"
-                                onClick={() => handleCardClick(product)}
-                            >
-                                <img src={`http://localhost:8000${images[0]}`} alt={product.name} />
-                                <h3>{product.name}</h3>
-                                <p className="price">₹{product.price}</p>
-                            </div>
-                        );
-                    })
-                )}
+      <div className="shop-product-grid">
+        {products.map((product) => {
+          const images = JSON.parse(product.image || "[]");
+          return (
+            <div className="shop-product-card" key={product.id}>
+              <img
+                src={`http://localhost:8000${images[0]}`}
+                alt={product.name}
+                className="shop-product-img"
+              />
+              <h3>{product.name}</h3>
+              <p className="shop-product-price">₹{product.price}</p>
             </div>
-                    </>
-                );
-            }
+          );
+        })}
+      </div>
+    </>
+  );
+}

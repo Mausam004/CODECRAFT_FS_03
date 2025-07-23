@@ -2,6 +2,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+    width: 100vw;
     background-color: #f3eded;
    
 }
@@ -15,6 +17,7 @@
 .register-box {
     background: #fff;
     padding: 20px;
+    justify-content: center;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 350px;
@@ -66,34 +69,15 @@
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
+    background-color:#ef476f;
     transition: 0.3s;
 }
 
 .register-btn:hover {
-     background: #0056b3;
+     background: #d93f63;
 }
 
 .register-login-text {
     margin-top: 10px;
     font-size: 14px;
 }
-
-.register-login-btn {
-    display: inline-block;
-    width: 94%;
-    padding: 10px;
-    background: rgb(21, 120, 150);
-    color: white;
-    text-align: center;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: none;
-}
-
-.register-login-btn:hover {
-    background: rgba(21, 120, 150, 0.763);
-} 

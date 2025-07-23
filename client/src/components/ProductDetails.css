@@ -13,8 +13,8 @@
 }
 
 .main-image {
-    width: 700px;
-    height: 700px;
+    width: 600px;
+    height: 500px;
     border-radius: 5px;
     background-color: #f4f4f4; /* Optional, to give a nice placeholder bg */
     display: flex;
@@ -35,8 +35,8 @@
 }
 
 .thumbnail-gallery img {
-    width: 145px;
-    height: 145px;
+    width: 100px;
+    height: 120px;
     object-fit: contain;
     background-color: #f4f4f4;
     border: 2px solid transparent;
@@ -89,8 +89,6 @@
 
 .add-to-cart-btn,
 .buy-now-btn {
-    background-color: black;
-    color: white;
     padding: 12px 30px;
     border: none;
     border-radius: 50px;
@@ -100,18 +98,29 @@
     width: fit-content;
 }
 
-.add-to-cart-btn:hover,
-.buy-now-btn:hover {
-    opacity: 0.7;
-}
-
 
 .add-to-cart-btn {
-    background-color: black;
-    color: white;
+  background-color: #00bfa6;
+  color: white;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 999px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
+
+.add-to-cart-btn:hover {
+  background-color: #00a38f;
+}
+
+
 
 .buy-now-btn {
     background-color: #e53935;
     color: white;
+}
+
+.buy-now-btn:hover{
+    background-color: #ce0f0c;
 }

@@ -3,6 +3,8 @@
   justify-content: center;
   align-items: center;
   border-radius: 8px;
+  height:100vh;
+  width: 100vw;
   background-color: #f3eded; /* Match register background */
 
 }
@@ -68,13 +70,14 @@
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
+  background-color: #ef476f;
   font-weight: bold;
   transition: 0.3s;
   margin-bottom: 10px;
 }
 
 .login-btn:hover {
-  background: #0056b3;
+  background:#d93f63;
 }
 
 .login-register-text {
