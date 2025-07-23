@@ -20,6 +20,7 @@ import CartPage from './components/CartPage';
 import SearchBar from './components/SearchBar';
 import BuyNowPage from './components/BuyNow';
 import Shop from './components/Shop';
+import BuyNowAll from './components/BuyNowAll';
 
 
 function App() {
@@ -40,10 +41,11 @@ function App() {
         <Route path="/product-list" element={<ProductList/>} />
         <Route path="/admin/*" element={<Admin/>} />
         <Route path="/product/:id" element={<ProductDetails/>} />
-        <Route path="/cart/:id" element={<CartPage/>} />
+        <Route path="/cart" element={<CartPage/>} />
         <Route path="/search" element={<SearchBar/>} />
         <Route path="/buynow/:id" element={<BuyNowPage/>} />
         <Route path="/shop" element={<Shop />} />
+        <Route path="/buynowall" element={<BuyNowAll />} />
       </Routes>
       <ToastContainer />
     </BrowserRouter>

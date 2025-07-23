@@ -26,7 +26,7 @@ export default function ProductDetails() {
     const images = JSON.parse(product.image);
 
 
-const checkAuth = () => {
+    const checkAuth = () => {
         const user = JSON.parse(localStorage.getItem('user'));
         if (!user) {
             navigate('/register');
@@ -36,18 +36,22 @@ const checkAuth = () => {
     };
 
 
-
     const handleBuyNow = () => {
         if (!checkAuth()) return;
-        navigate(`/buynow/${id}`);
+        navigate(`/buynow/${product.id}`);
     };
 
     const handleAddToCart = () => {
-        const existingCart = JSON.parse(localStorage.getItem('cart')) || [];
+        if (!checkAuth()) return;
+        const user = JSON.parse(localStorage.getItem('user'));
+        const existingCart = JSON.parse(localStorage.getItem(`cart_${user.email}`)) || [];
         existingCart.push(product);
-        localStorage.setItem('cart', JSON.stringify(existingCart));
-        navigate(`/cart/${id}`);
-        alert('Product added to cart!');
+        localStorage.setItem(`cart_${user.email}`, JSON.stringify(existingCart));
+
+        toast.success('Product added to cart!');
+        setTimeout(() => {
+            navigate("/cart");
+        }, 2000);
     };
 
     return (
@@ -78,9 +82,15 @@ const checkAuth = () => {
                     <p><strong>Sizes:</strong> {product.size}</p>
                     <p><strong>Gender:</strong> {product.gender}</p>
                 </div>
-                <div className="button-group">
-                    <button className="add-to-cart-btn" onClick={handleAddToCart}>Add to Cart</button>
-                    <button className="buy-now-btn" onClick={handleBuyNow}>Buy Now</button>
+               <div className="button-group">
+                    {product.stock_quantity === 0 ? (
+                        <span className="out-of-stock">Out of Stock</span>
+                    ) : (
+                        <>
+                            <button className="add-to-cart-btn" onClick={handleAddToCart}>Add to Cart</button>
+                            <button className="buy-now-btn" onClick={handleBuyNow}>Buy Now</button>
+                        </>
+                    )}
                 </div>
             </div>
         </div>

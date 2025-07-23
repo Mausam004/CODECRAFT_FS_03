@@ -44,7 +44,12 @@ export default function Register() {
                 const data = response.data;
 
                 // Save user data to localStorage
-                localStorage.setItem("user", JSON.stringify(data.user));
+                  localStorage.setItem('user', JSON.stringify({
+                    id: data.user.id,
+                    name:data.user.name,
+                    email:data.user.email,
+                    role: data.user.role
+                }));
 
                 // 3. Navigate directly to profile
                 toast.success("Registered successfully!");

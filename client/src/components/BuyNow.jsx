@@ -3,12 +3,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import "./buynow.css";
+import './BuyNow.css';
 
 export default function BuyNowPage() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [product, setProduct] = useState(null);
+    const [quantity, setQuantity] = useState(1);
+
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/products/get/${id}`)
@@ -16,33 +18,35 @@ export default function BuyNowPage() {
             .catch(err => console.error(err));
     }, [id]);
 
- const handleSubmit = (e) => {
-    e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) {
+            navigate('/register');
+            return;
+        }
 
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user) {
-        toast.error("Please log in first.");
-        navigate("/login");
-        return;
-    }
+        try {
+            await axios.post('http://localhost:8000/api/products/purchase-one', {
+                user_id: user.id,
+                product_id: product.id,
+             quantity: quantity
+            });
 
-    const order = {
-        userId: user.email, // or user.id if available
-        product: product,
-        timestamp: new Date().toISOString()
+            const existingOrders = JSON.parse(localStorage.getItem('purchased')) || [];
+            existingOrders.push(product);
+            localStorage.setItem('purchased', JSON.stringify(existingOrders));
+
+            toast.success('Order placed successfully!', {
+                position: 'top-center',
+                autoClose: 1500,
+                onClose: () => navigate('/cart')
+            });
+        } catch (error) {
+            console.error(error);
+            toast.error('Purchase failed.');
+        }
     };
-
-    const existingOrders = JSON.parse(localStorage.getItem('purchased')) || [];
-    existingOrders.push(order);
-    localStorage.setItem('purchased', JSON.stringify(existingOrders));
-
-    toast.success('Order placed successfully!', {
-        position: 'top-center',
-        autoClose: 1500,
-        onClose: () => navigate('/')
-    });
-};
-
 
     if (!product) return <p>Loading...</p>;
 
@@ -54,7 +58,7 @@ export default function BuyNowPage() {
 
             <h3 className="shipping-heading">Shipping Information</h3>
             <form className="shipping-form" onSubmit={handleSubmit}>
-                <label>Full Name</label>
+                <label>Name</label>
                 <input type="text" placeholder="Full Name" required />
 
                 <label>Address</label>
@@ -69,10 +73,28 @@ export default function BuyNowPage() {
                 <label>Phone Number</label>
                 <input type="text" placeholder="Phone Number" required />
 
+                <label>Quantity</label>
+                <input
+                    type="number"
+                    min="1"
+                    value={quantity}
+                    onChange={(e) => setQuantity(parseInt(e.target.value))}
+                    required
+                />
+
+
+                <h3 className="shipping-heading">Payment Method</h3>
+                <div className="payment-method">
+                    <input type="radio" id="cod" name="payment" value="Cash on Delivery" defaultChecked required />
+                    <label htmlFor="cod">Cash on Delivery (COD)</label>
+                </div>
+
+
                 <button type="submit" className="place-order-btn">Place Order</button>
             </form>
 
             <ToastContainer />
         </div>
+
     );
 }

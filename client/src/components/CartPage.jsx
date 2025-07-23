@@ -1,72 +1,127 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './CartPage.css';
 
 export default function CartPage() {
     const [cartItems, setCartItems] = useState([]);
+    const [purchasedItems, setPurchasedItems] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const items = JSON.parse(localStorage.getItem('cart')) || [];
-        setCartItems(items);
-    }, []);
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user) {
+            navigate('/register');
+            return;
+        }
 
-    const handleCardClick = (id) => {
-        navigate(`/product/${id}`);
+        console.log("👤 Logged in user:", user);
+
+        // Load cart from user-specific key
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        console.log("🛒 Cart for this user:", cart);
+
+        setCartItems(cart);
+
+        // Load purchased products from backend
+        axios.post('http://localhost:8000/api/products/purchased', { user_id: user.id })
+            .then(res => setPurchasedItems(res.data))
+            .catch(err => console.error('Error loading purchased products:', err));
+    }, [navigate]);
+
+    const getFirstImage = (item) => {
+        try {
+            const images = Array.isArray(item.image) ? item.image : JSON.parse(item.image);
+            return `http://localhost:8000${images[0]}`;
+        } catch {
+            return '';
+        }
     };
 
-    const handleRemove = (e, indexToRemove) => {
-        e.stopPropagation(); // Prevent card click
+    const handleCardClick = (productId) => {
+        navigate(`/product/${productId}`);
+    };
+
+    const handleRemoveFromCart = (e, indexToRemove) => {
+        e.stopPropagation();
+        const user = JSON.parse(localStorage.getItem('user'));
         const updatedCart = cartItems.filter((_, index) => index !== indexToRemove);
         setCartItems(updatedCart);
-        localStorage.setItem('cart', JSON.stringify(updatedCart));
+        localStorage.setItem(`cart_${user.email}`, JSON.stringify(updatedCart));
+    };
+
+    const handleBuyAll = () => {
+        navigate('/buynowall');
     };
 
     return (
         <div className="cart-container">
-            <h2 className="cart-heading">Your Cart</h2>
+            <h2 className="cart-heading">🛒 Your Cart</h2>
+
             {cartItems.length === 0 ? (
                 <p className="empty-cart">Your cart is empty.</p>
             ) : (
-                <div className="cart-grid">
-                    {cartItems.map((item, index) => {
-                        let imageUrl = '';
-                        try {
-                            const images = JSON.parse(item.image);
-                            imageUrl = `http://localhost:8000${images[0]}`;
-                        } catch (e) {
-                            console.error('Invalid image format:', e);
-                        }
-
-                        return (
+                <>
+                    <div className="cart-grid">
+                        {cartItems.map((item, index) => (
                             <div
                                 key={index}
                                 className="cart-card"
                                 onClick={() => handleCardClick(item.id)}
                                 style={{ cursor: 'pointer' }}
                             >
-                                {imageUrl && (
-                                    <img
-                                        src={imageUrl}
-                                        alt={item.name}
-                                        className="cart-card-image"
-                                    />
+                                {getFirstImage(item) && (
+                                    <img src={getFirstImage(item)} alt={item.name} className="cart-card-image" />
                                 )}
                                 <div className="cart-card-details">
                                     <h3>{item.name}</h3>
                                     <p>Price: ₹{item.price}</p>
-                                    <button
-                                        className="remove-btn"
-                                        onClick={(e) => handleRemove(e, index)}
-                                    >
-                                        Remove
-                                    </button>
+                                    <div className="cart-card-actions">
+                                        <button className="remove-btn" onClick={(e) => handleRemoveFromCart(e, index)}>
+                                            Remove
+                                        </button>
+                                        <button className="buy-btn" onClick={() => navigate(`/buynow/${item.id}`)}>
+                                            Buy Now
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        );
-                    })}
-                </div>
+                        ))}
+                    </div>
+                    <button className="buy-all-btn" onClick={handleBuyAll}>
+                        Buy All in Cart
+                    </button>
+                </>
             )}
+
+            <hr style={{ margin: '40px 0', borderTop: '1px solid #ccc' }} />
+
+            <div className="order-summary-section">
+                <h2 className="cart-heading">🧾 Purchased Products</h2>
+                {purchasedItems.length === 0 ? (
+                    <p className="empty-cart">No products purchased yet.</p>
+                ) : (
+                    <div className="cart-grid">
+                        {purchasedItems.map((item, index) => (
+                            <div
+                                key={index}
+                                className="cart-card"
+                                onClick={() => handleCardClick(item.id)}
+                                style={{ cursor: 'pointer' }}
+                            >
+                                {getFirstImage(item) && (
+                                    <img src={getFirstImage(item)} alt={item.name} className="cart-card-image" />
+                                )}
+                                <div className="cart-card-details">
+                                    <h3>{item.name}</h3>
+                                    <p>Price: ₹{item.price}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

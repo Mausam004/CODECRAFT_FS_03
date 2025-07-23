@@ -34,6 +34,89 @@ export async function addProduct(req, res) {
     }
 }
 
+export const purchaseOneProduct = async (req, res) => {
+    const { user_id, product_id, quantity } = req.body;
+
+    if (!user_id || !product_id || !quantity) {
+        return res.status(400).json({ error: 'Missing user_id, product_id, or quantity' });
+    }
+
+    try {
+        const [rows] = await db.promise().query(
+            'SELECT stock_quantity FROM products WHERE id = ?',
+            [product_id]
+        );
+
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Product not found' });
+        }
+
+        const currentStock = rows[0].stock_quantity;
+
+        if (currentStock < quantity) {
+            return res.status(400).json({ error: 'Insufficient stock available' });
+        }
+
+        // Insert into purchased_products
+        await db.promise().query(
+            'INSERT INTO purchased_products (user_id, product_id, quantity, purchase_date) VALUES (?, ?, ?, NOW())',
+            [user_id, product_id, quantity]
+        );
+
+        // Update stock
+        await db.promise().query(
+            'UPDATE products SET stock_quantity = stock_quantity - ? WHERE id = ?',
+            [quantity, product_id]
+        );
+
+        res.json({ success: true, message: 'Product purchased successfully' });
+    } catch (error) {
+        console.error('Error during purchase:', error); // 🔥 log real error
+        res.status(500).json({ error: 'Internal Server Error', detail: error.message });
+    }
+};
+
+export async function purchaseMultipleProducts(req, res) {
+    const { user_id, product_ids } = req.body;
+
+    if (!user_id || !product_ids || !product_ids.length) {
+        return res.status(400).json({ error: 'Missing user_id or product_ids' });
+    }
+
+    try {
+        for (const product_id of product_ids) {
+            await db.promise().query(
+                'INSERT INTO purchased_products (user_id, product_id) VALUES (?, ?)',
+                [user_id, product_id]
+            );
+        }
+        res.json({ success: true, message: 'All products purchased successfully' });
+    } catch (error) {
+        console.error('Error inserting purchases:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+export async function getPurchasedProducts(req, res) {
+    const { user_id } = req.body;
+
+    if (!user_id) {
+        return res.status(400).json({ error: "User ID is required." });
+    }
+
+    try {
+        const [rows] = await db.promise().query(
+            `SELECT p.* FROM products p
+             JOIN purchased_products pp ON p.id = pp.product_id
+             WHERE pp.user_id = ?`,
+            [user_id]
+        );
+        res.json(rows);
+    } catch (error) {
+        console.error('Error fetching purchased products:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
 
 
 export async function getProducts(req, res) {
@@ -78,6 +161,9 @@ export async function getProducts(req, res) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }
+
+
+
 
 export async function getProductById(req, res) {
     try {

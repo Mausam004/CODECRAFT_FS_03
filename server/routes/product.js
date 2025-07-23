@@ -1,7 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import path from 'path';
-import { addProduct, getProducts, getProductById, deleteProduct, updateProduct ,searchProducts} from '../controller/productController.js';
+import { addProduct, getProducts, getProductById, deleteProduct, updateProduct ,searchProducts,purchaseOneProduct,purchaseMultipleProducts,getPurchasedProducts} from '../controller/productController.js';
 
 const router = express.Router();
 
@@ -25,5 +25,9 @@ router.get('/get', getProducts);
 router.get('/get/:id', getProductById);
 router.delete('/delete/:id', deleteProduct);
 router.post('/search', searchProducts);
+router.post('/purchase-one', purchaseOneProduct);
+router.post('/purchase-multiple', purchaseMultipleProducts);
+router.post('/purchased', getPurchasedProducts);
+
 
 export default router;
