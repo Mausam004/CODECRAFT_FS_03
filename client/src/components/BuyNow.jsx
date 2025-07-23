@@ -17,7 +17,7 @@ export default function BuyNowPage() {
             .then(res => setProduct(res.data))
             .catch(err => console.error(err));
     }, [id]);
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         const user = JSON.parse(localStorage.getItem('user'));
@@ -80,14 +80,7 @@ export default function BuyNowPage() {
                     value={quantity}
                     onChange={(e) => setQuantity(parseInt(e.target.value))}
                     required
-                />
-
-
-                <h3 className="shipping-heading">Payment Method</h3>
-                <div className="payment-method">
-                    <input type="radio" id="cod" name="payment" value="Cash on Delivery" defaultChecked required />
-                    <label htmlFor="cod">Cash on Delivery (COD)</label>
-                </div>
+                />            
 
 
                 <button type="submit" className="place-order-btn">Place Order</button>

@@ -6,6 +6,8 @@ import './CartPage.css';
 export default function CartPage() {
     const [cartItems, setCartItems] = useState([]);
     const [purchasedItems, setPurchasedItems] = useState([]);
+    const [isInCart, setIsInCart] = useState(false);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,8 +19,9 @@ export default function CartPage() {
 
         console.log("👤 Logged in user:", user);
 
-        // Load cart from user-specific key
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      // ✅ Use user-specific cart key consistently
+    const cartKey = `cart_${user.email}`;
+    const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
         console.log("🛒 Cart for this user:", cart);
 
@@ -43,13 +46,18 @@ export default function CartPage() {
         navigate(`/product/${productId}`);
     };
 
-    const handleRemoveFromCart = (e, indexToRemove) => {
-        e.stopPropagation();
-        const user = JSON.parse(localStorage.getItem('user'));
-        const updatedCart = cartItems.filter((_, index) => index !== indexToRemove);
-        setCartItems(updatedCart);
-        localStorage.setItem(`cart_${user.email}`, JSON.stringify(updatedCart));
-    };
+  const handleRemoveFromCart = (e, indexToRemove) => {
+    e.stopPropagation();
+    const user = JSON.parse(localStorage.getItem('user'));
+    const cartKey = `cart_${user.email}`;
+
+    const updatedCart = cartItems.filter((_, index) => index !== indexToRemove);
+    setCartItems(updatedCart);
+
+    // ✅ Save back to the same key
+    localStorage.setItem(cartKey, JSON.stringify(updatedCart));
+};
+
 
     const handleBuyAll = () => {
         navigate('/buynowall');

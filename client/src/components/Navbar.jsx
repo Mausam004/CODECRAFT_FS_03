@@ -52,7 +52,7 @@ export default function Navbar() {
           className="cart-icon"
           size={24}
           title="Cart"
-          onClick={() => navigate("/cart/${cart.id}")}
+          onClick={() => navigate("/cart")}
         />
 
         {user ? (

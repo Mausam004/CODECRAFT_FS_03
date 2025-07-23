@@ -8,6 +8,7 @@ export default function ProductDetails() {
     const navigate = useNavigate();
     const [product, setProduct] = useState(null);
     const [selectedImage, setSelectedImage] = useState('');
+    const [isInCart, setIsInCart] = useState(false);
 
     useEffect(() => {
         axios.get(`http://localhost:8000/api/products/get/${id}`)
@@ -20,6 +21,16 @@ export default function ProductDetails() {
                 console.error(err);
             });
     }, [id]);
+
+     useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (!user || !product) return;
+
+        const cartKey = `cart_${user.email}`;
+        const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+        const exists = cart.find(p => p.id === product.id);
+        setIsInCart(!!exists); // ✅ Update state if found in cart
+    }, [product]);
 
     if (!product) return <p>Loading...</p>;
 
@@ -47,13 +58,14 @@ export default function ProductDetails() {
         const existingCart = JSON.parse(localStorage.getItem(`cart_${user.email}`)) || [];
         existingCart.push(product);
         localStorage.setItem(`cart_${user.email}`, JSON.stringify(existingCart));
-
+         setIsInCart(true); 
         toast.success('Product added to cart!');
         setTimeout(() => {
             navigate("/cart");
         }, 2000);
     };
-
+  
+    
     return (
         <div className="product-container">
             <div className="left-column">
@@ -86,8 +98,10 @@ export default function ProductDetails() {
                     {product.stock_quantity === 0 ? (
                         <span className="out-of-stock">Out of Stock</span>
                     ) : (
-                        <>
-                            <button className="add-to-cart-btn" onClick={handleAddToCart}>Add to Cart</button>
+                        <>  {!isInCart && (
+                <button className="add-to-cart-btn" onClick={handleAddToCart}>Add to Cart</button>
+            )}
+                           
                             <button className="buy-now-btn" onClick={handleBuyNow}>Buy Now</button>
                         </>
                     )}

@@ -99,8 +99,9 @@
 }
 
 
+
 .add-to-cart-btn {
-  background-color: #00bfa6;
+  background-color:#4CAF50;
   color: white;
   padding: 10px 24px;
   border: none;
@@ -111,18 +112,18 @@
 }
 
 .add-to-cart-btn:hover {
-  background-color: #00a38f;
+  background-color: #388e3c ;
 }
 
 
 
 .buy-now-btn {
-    background-color: #e53935;
+    background-color:#ff4d4d;
     color: white;
 }
 
 .buy-now-btn:hover{
-    background-color: #ce0f0c;
+    background-color: #e60000;
 }
 
 .out-of-stock {

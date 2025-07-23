@@ -9,6 +9,7 @@
   font-size: 28px;
   font-weight: 600;
   color: #333;
+  text-align: center;
   margin-bottom: 30px;
 }
 
@@ -97,7 +98,7 @@
 }
 
 .buy-all-btn {
-  background-color: #2196F3;
+  background-color: #ef476f;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -106,11 +107,11 @@
   cursor: pointer;
   margin-top: 10px;
   display: block;
-  margin-left: auto;
+  margin-left: 600px;
 }
 
 .buy-all-btn:hover {
-  background-color: #1976D2;
+  background-color:#d93f63;
 }
 
 .order-summary-section {
